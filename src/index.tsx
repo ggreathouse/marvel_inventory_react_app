@@ -4,21 +4,24 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Home, Dashboard, SignIn } from './components';
 import './styles.css'
-
+import { theme } from './Theme/themes'
+import { ThemeProvider } from '@mui/material/styles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path = '/' element={<Home title={'Marvel Inventory'} />} />
-        <Route path = '/dashboard' element={ <Dashboard />} />
-        <Route path = '/signin' element={<SignIn />} />
-      </Routes>
-    
-    </Router>
+    <ThemeProvider theme = {theme}>
+      <Router>
+        <Routes>
+          <Route path = '/' element={<Home title={'Marvel Inventory'} />} />
+          <Route path = '/dashboard' element={ <Dashboard />} />
+          <Route path = '/signin' element={<SignIn />} />
+        </Routes>
+      
+      </Router>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
