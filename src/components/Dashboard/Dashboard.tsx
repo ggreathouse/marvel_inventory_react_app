@@ -10,13 +10,18 @@ import {Drawer as MUIDrawer,
         Divider,
         Button,
         CssBaseline,
-        Box
+        Box,
+        Dialog,
+        DialogActions,
+        DialogContent,
+        DialogContentText,
+        DialogTitle
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ChevronRight, ChevronLeft } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../Theme/themes';
-import { DataTable } from '../../components';
+import { DataTable, SuperheroForm } from '../../components';
 
 const drawerWidth = 240;
 
@@ -77,7 +82,7 @@ const myStyles = {
         display: 'flex'
     },
     toolbarButton:{
-        marginLeft: 0,
+        marginLeft: 'auto',
         backgroundColor: theme.palette.primary.contrastText,
         "&:hover": {
             color: 'white',
@@ -89,6 +94,7 @@ const myStyles = {
 export const Dashboard = () =>{
     const navigate = useNavigate();
     const[open, setOpen] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true)
@@ -97,6 +103,12 @@ export const Dashboard = () =>{
         setOpen(false)
     }
 
+    const handleDialogOpen = () =>{
+        setDialogOpen(true);
+    }
+    const handleDialogClose = () =>{
+        setDialogOpen(false);
+    }
     const itemsList =[
         {
             text: 'Home',
@@ -122,7 +134,18 @@ export const Dashboard = () =>{
                                 <MenuIcon />
                             </IconButton>
                             <Typography variant = 'h6' noWrap>Dashboard 📊</Typography>
-                            <Button sx={myStyles.toolbarButton}>Create New Superhero</Button>
+                            <Button sx={myStyles.toolbarButton} onClick={handleDialogOpen}>Create New Superhero</Button>
+                            {/* Dialog PopUp HTML */}
+                            <Dialog open={dialogOpen} onClose={handleDialogClose} aria-labelby = 'form-dialog-title'>
+                                <DialogTitle id='form-dialog-title'>Add A New Superhero</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText>Fill the entire form to create a superhero.</DialogContentText>
+                                        <SuperheroForm />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleDialogClose} color='warning'>Cancel</Button>
+                                    </DialogActions>
+                            </Dialog>
                     </Toolbar>
             </AppBar>
             <MUIDrawer
